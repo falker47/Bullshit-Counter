@@ -1,0 +1,16 @@
+# Firebase
+.firebase/
+firebaselog.txt
+firebase-debug.log*
+.firebaserc
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Config (Sensitive)
+public/config.js
+
+# OS
+.DS_Store
+Thumbs.db

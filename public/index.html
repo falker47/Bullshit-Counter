@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bullshit Counter</title>
+    <meta name="description" content="A purely offline, persistent bullshit counter PWA.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <meta name="theme-color" content="#0f172a">
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Bullshit Counter</h1>
+            <p class="subtitle">Tracking the absurdity, one claim at a time.</p>
+            <div class="header-actions">
+                <button id="install-btn-hero" class="btn-install-hero" style="display: none;">
+                    📥 Install App
+                </button>
+                <button id="share-btn" class="btn-share" title="Share Counter">
+                    🔗 Share
+                </button>
+            </div>
+        </header>
+
+        <main class="counter-card">
+            <div class="counter-display">
+                <span id="counter-value">0</span>
+                <span class="label">BULLSHITS</span>
+            </div>
+
+            <div class="controls">
+                <button id="decrement-btn" class="secondary" title="Subtract">-</button>
+                <button id="increment-btn" class="primary" title="Add Bullshit">+1</button>
+                <button id="reset-btn" class="danger" title="Reset Counter">Reset</button>
+            </div>
+        </main>
+
+        <section class="history">
+            <h3>Recent Activity</h3>
+            <ul id="history-list">
+                <!-- Log entries will appear here -->
+            </ul>
+        </section>
+
+        <footer>
+            <p>We love you • v5.2.1 • <span id="force-reload" style="cursor:pointer; text-decoration: underline;"
+                    onclick="forceUpdate()">Force Refresh</span></p>
+        </footer>
+    </div>
+
+    <script shadow>
+        async function forceUpdate() {
+            if (confirm("Forzare aggiornamento v5.2.1?")) {
+                if ('serviceWorker' in navigator) {
+                    const regs = await navigator.serviceWorker.getRegistrations();
+                    for (const r of regs) await r.unregister();
+                }
+                if ('caches' in window) {
+                    const keys = await caches.keys();
+                    for (const k of keys) await caches.delete(k);
+                }
+                window.location.href = window.location.origin + window.location.pathname + "?v=" + Date.now();
+            }
+        }
+    </script>
+    <script type="module" src="app.v52.js"></script>
+</body>
+
+</html>
