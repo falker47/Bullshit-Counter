@@ -22,6 +22,10 @@ const installBtnHero = document.getElementById('install-btn-hero');
 onValue(counterRef, (snap) => {
     count = snap.val() || 0;
     if (counterDisplay) counterDisplay.textContent = count;
+}, (error) => {
+    console.error("COUNTER LOAD ERROR:", error);
+    if (counterDisplay) counterDisplay.textContent = "ERR";
+    alert("Errore caricamento contatore: " + error.message);
 });
 
 onValue(historyRef, (snap) => {
@@ -35,6 +39,8 @@ onValue(historyRef, (snap) => {
             </li>
         `).join('');
     }
+}, (error) => {
+    console.error("HISTORY LOAD ERROR:", error);
 });
 
 // Actions
